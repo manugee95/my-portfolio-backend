@@ -9,7 +9,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://my-portfolio-lac-pi-48.vercel.app"]
+    origin: [
+      "http://localhost:5173",
+      "https://my-portfolio-lac-pi-48.vercel.app",
+      "https://emmanueleseigbe.com",
+    ],
   })
 );
 app.use(express.json());
@@ -22,7 +26,7 @@ const RECAPTCHA_SECRET = process.env.RECAPTCHA_SECRET;
 
 // Configure Nodemailer Transporter
 const transporter = nodemailer.createTransport({
-  host: "astutehcc.com",
+  host: "emmanueleseigbe.com",
   port: 465,
   secure: true,
   auth: {
@@ -34,13 +38,7 @@ const transporter = nodemailer.createTransport({
 // Appointment Booking Endpoint
 app.post("/api/contact-me", async (req, res) => {
   try {
-    const {
-      name,
-      email,
-      phone,
-      message,
-      captchaToken,
-    } = req.body;
+    const { name, email, phone, message, captchaToken } = req.body;
 
     // Validate reCAPTCHA token
     const recaptchaResponse = await axios.post(
@@ -62,14 +60,14 @@ app.post("/api/contact-me", async (req, res) => {
     const mailOptions = {
       from: `"My Portfolio Website" <${EMAIL_USER}>`,
       to: ADMIN_EMAIL,
-      subject: "New Contact Information",
+      subject: "New Consultation Request",
       html: `
         <div style="text-align: left;">
-          <p>You have a new message from your portfolio website. Here are the details: </p>
+          <p>You have a new consultation request from your portfolio website. Here are the details: </p>
           <p><b>Name:</b> ${name}</p>
           <p><b>Email:</b> ${email}</p>
           <p><b>Phone:</b> ${phone}</p>
-          <p><b>Date:</b> ${message}</p>
+          <p><b>Message:</b> ${message}</p>
         </div>
       `,
     };
