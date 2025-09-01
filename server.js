@@ -12,7 +12,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://my-portfolio-lac-pi-48.vercel.app",
-      "https://emmanueleseigbe.com",
+      "https://www.emmanueleseigbe.com",
     ],
   })
 );
